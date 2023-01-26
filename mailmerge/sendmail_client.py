@@ -40,6 +40,7 @@ class SendmailClient:
             port = parser.getint("smtp_server", "port")
             security = parser.get("smtp_server", "security", fallback=None)
             username = parser.get("smtp_server", "username", fallback=None)
+            password = parser.get("smtp_server", "password", fallback=None)
             ratelimit = parser.getint("smtp_server", "ratelimit", fallback=0)
         except (configparser.Error, ValueError) as err:
             raise exceptions.MailmergeError(f"{self.config_path}: {err}")
@@ -65,6 +66,7 @@ class SendmailClient:
         self.config = MailmergeConfig(
             username, host, port, security, ratelimit,
         )
+        self.password = password
 
     def sendmail(self, sender, recipients, message):
         """Send email message."""
